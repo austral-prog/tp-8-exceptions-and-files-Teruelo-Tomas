@@ -28,4 +28,24 @@ def write_inventory(filename, inventory):
         # iron:7
         # wood:10
     """
-    pass  # Reemplazar con tu implementación
+    try:
+        with open(filename, 'w') as archivo:
+
+            if len(inventory) == 0:
+                return
+
+            items_ordenados = list(inventory.keys())
+
+            items_ordenados.sort()
+
+            for item in items_ordenados:
+                cantidad = inventory[item]
+
+                linea = item + ":" + str(cantidad) + "\n"
+
+                archivo.write(linea)
+
+    except PermissionError:
+        print("Error: No se tienen los permisos necesarios para escribir en el archivo.")
+    except Exception as error_inesperado:
+        print("Ocurrió un error inesperado al intentar escribir el archivo:", error_inesperado)

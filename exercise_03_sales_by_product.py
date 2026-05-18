@@ -31,7 +31,25 @@ def read_sales(filename):
             "producto2": [200.0],
         }
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r') as archivo:
+        contenido = archivo.read().strip()
+        resultado = {}
+
+        if not contenido:
+            return resultado
+
+        # Separamos por punto yコマ y filtramos fragmentos vacíos (como el del final)
+        fragmentos = [f for f in contenido.split(";") if f.strip()]
+
+        for fragmento in fragmentos:
+            producto, precio_cadena = fragmento.split(":")
+            precio = float(precio_cadena)
+
+            if producto not in resultado:
+                resultado[producto] = []
+            resultado[producto].append(precio)
+
+        return resultado
 
 
 def process_sales(data):
@@ -53,4 +71,10 @@ def process_sales(data):
         process_sales({"producto1": [100.0, 150.0]})
         # imprime: "producto1: ventas totales $250.00, promedio $125.00"
     """
-    pass  # Reemplazar con tu implementación
+    for producto in data:
+        ventas = data[producto]
+        total = sum(ventas)
+        promedio = total / len(ventas)
+        # :.2f fuerza a mostrar exactamente dos decimales en la consola
+        print(f"{producto}: ventas totales ${total:.2f}, promedio ${promedio:.2f}")
+

@@ -32,4 +32,21 @@ def merge_files(file1, file2, output):
         # hola
         # mundo
     """
-    pass  # Reemplazar con tu implementación
+    import os
+
+    if not os.path.exists(file1):
+        raise FileNotFoundError(f"{file1} no existe.")
+    if not os.path.exists(file2):
+        raise FileNotFoundError(f"{file2} no existe.")
+
+    with open(file1, 'r') as f1:
+        datos1 = f1.read()
+    with open(file2, 'r') as f2:
+        datos2 = f2.read()
+
+    with open(output, 'w') as arch_salida:
+        arch_salida.write(datos1)
+        arch_salida.write(datos2)
+    return None
+
+

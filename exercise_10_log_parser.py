@@ -42,4 +42,24 @@ def parse_log(filename):
             "WARN": ["lento"],
         }
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r') as archivo:
+        resultado = {}
+        for linea in archivo:
+            linea_limpia = linea.strip()
+            if not linea_limpia:
+                continue
+
+            if ":" not in linea_limpia:
+                raise ValueError("Línea de log inválida (falta ':')")
+
+            # split(":", 1) divide solo en el primer dos puntos hallado
+            partes = linea_limpia.split(":", 1)
+            nivel = partes[0].strip()
+            mensaje = partes[1].strip()
+
+            if nivel not in resultado:
+                resultado[nivel] = []
+            resultado[nivel].append(mensaje)
+
+        return resultado
+
